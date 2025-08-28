@@ -58,6 +58,19 @@ body {
     flex-direction: column;
 }
 
+/* Mobile container adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0.75rem 0.5rem;
+    }
+}
+
 /* Header */
 header {
     text-align: center;
@@ -76,6 +89,33 @@ header p {
     color: var(--text-secondary);
     max-width: 600px;
     margin: 0 auto;
+}
+
+/* Mobile header adjustments */
+@media (max-width: 768px) {
+    header {
+        margin-bottom: 2rem;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    header p {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.75rem;
+        line-height: 1.2;
+    }
+    
+    header p {
+        font-size: 0.9rem;
+    }
 }
 
 /* Main Content */
@@ -103,6 +143,22 @@ main {
     border: 1px solid var(--border);
 }
 
+/* Mobile form adjustments */
+@media (max-width: 768px) {
+    .generator-section {
+        padding: 1.5rem;
+        margin: 0 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .generator-section {
+        padding: 1rem;
+        margin: 0;
+        border-radius: var(--radius);
+    }
+}
+
 .qr-form {
     display: flex;
     flex-direction: column;
@@ -124,6 +180,18 @@ main {
 @media (max-width: 640px) {
     .form-row {
         grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+/* Mobile form group adjustments */
+@media (max-width: 480px) {
+    .form-group {
+        gap: 0.4rem;
+    }
+    
+    .qr-form {
+        gap: 1.25rem;
     }
 }
 
@@ -152,6 +220,18 @@ input:focus, textarea:focus, select:focus {
 textarea {
     min-height: 100px;
     resize: vertical;
+}
+
+/* Mobile input and textarea adjustments */
+@media (max-width: 480px) {
+    input, textarea, select {
+        padding: 0.65rem;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    textarea {
+        min-height: 80px;
+    }
 }
 
 input[type="range"] {
@@ -209,6 +289,22 @@ small {
     transform: none;
 }
 
+/* Mobile Generate button adjustments */
+@media (max-width: 640px) {
+    .generate-btn {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .generate-btn {
+        padding: 1.125rem 1rem;
+        font-size: 1.05rem;
+        font-weight: 700;
+    }
+}
+
 /* Result Section */
 .result-section {
     background: var(--background);
@@ -220,6 +316,23 @@ small {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
+}
+
+/* Mobile result section adjustments */
+@media (max-width: 768px) {
+    .result-section {
+        padding: 1.5rem;
+        margin: 0 0.5rem;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .result-section {
+        padding: 1rem;
+        margin: 0;
+        gap: 1.25rem;
+    }
 }
 
 .qr-result {
@@ -264,6 +377,24 @@ small {
     min-width: 140px;
 }
 
+/* Mobile button adjustments */
+@media (max-width: 640px) {
+    .action-btn {
+        padding: 0.875rem 1.25rem;
+        min-width: 120px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .action-btn {
+        padding: 1rem;
+        min-width: 0;
+        width: 100%;
+        font-size: 1rem;
+    }
+}
+
 .action-btn:hover:not(:disabled) {
     background: #047857;
     transform: translateY(-1px);
@@ -303,6 +434,32 @@ footer a {
 
 footer a:hover {
     text-decoration: underline;
+}
+
+/* Mobile footer adjustments */
+@media (max-width: 768px) {
+    footer {
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+    }
+    
+    footer p {
+        font-size: 0.8rem;
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    footer {
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+    }
+    
+    footer p {
+        font-size: 0.75rem;
+        line-height: 1.4;
+        padding: 0 0.5rem;
+    }
 }
 
 /* Loading State */
@@ -552,5 +709,42 @@ input[type="file"]:focus {
 @media (max-width: 640px) {
   .action-row {
     flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+/* Enhanced mobile touch targets and interactions */
+@media (max-width: 480px) {
+  /* Larger touch targets for mobile */
+  button, .action-btn, .generate-btn {
+    min-height: 44px; /* iOS/Android recommended minimum */
+  }
+  
+  /* Better spacing for touch interaction */
+  .result-actions {
+    gap: 1rem;
+  }
+  
+  /* Improved mobile tap states */
+  .action-btn:active, .generate-btn:active {
+    transform: scale(0.98);
+  }
+  
+  /* Better mobile scrolling for long content */
+  .qr-form {
+    scroll-behavior: smooth;
+  }
+  
+  /* Improved mobile color picker */
+  input[type="color"] {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+  }
+  
+  /* Better mobile range sliders */
+  input[type="range"] {
+    height: 2.5rem;
+    cursor: pointer;
   }
 }
