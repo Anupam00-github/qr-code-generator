@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>QR Code Generator</h1>
+            <p>Generate QR codes for text, URLs, contact info, and more</p>
+        </header>
+
+        <main>
+            <div class="generator-section">
+                <form id="qr-form" class="qr-form">
+                    <div class="form-group">
+                        <label for="input-text">Text or URL to encode:</label>
+                        <textarea 
+                            id="input-text" 
+                            name="inputText" 
+                            placeholder="Enter text, URL, phone number, email, etc."
+                            required
+                            aria-describedby="input-help"
+                        ></textarea>
+                        <small id="input-help">Enter any text you want to convert to a QR code</small>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="error-correction">Error Correction Level:</label>
+                            <select id="error-correction" name="errorCorrection" aria-describedby="ecc-help">
+                                <option value="LOW">Low (~7%)</option>
+                                <option value="MEDIUM" selected>Medium (~15%)</option>
+                                <option value="QUARTILE">Quartile (~25%)</option>
+                                <option value="HIGH">High (~30%)</option>
+                            </select>
+                            <small id="ecc-help">Higher levels can recover from more damage</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="border-size">Border Size:</label>
+                            <input 
+                                type="range" 
+                                id="border-size" 
+                                name="borderSize" 
+                                min="1" 
+                                max="10" 
+                                value="4"
+                                aria-describedby="border-help"
+                            >
+                            <span id="border-value">4</span>
+                            <small id="border-help">White space around the QR code</small>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="qr-size">QR Code Size:</label>
+                            <input 
+                                type="range" 
+                                id="qr-size" 
+                                name="qrSize" 
+                                min="1" 
+                                max="10" 
+                                value="4"
+                                aria-describedby="size-help"
+                            >
+                            <span id="size-value">4</span>
+                            <small id="size-help">Size multiplier for the QR code</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input 
+                                    type="checkbox" 
+                                    id="make-clickable" 
+                                    name="makeClickable"
+                                    aria-describedby="clickable-help"
+                                >
+                                <span class="checkbox-text">Make QR Code Clickable</span>
+                            </label>
+                            <small id="clickable-help">Allow users to tap/click the QR code on touch devices</small>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="foreground-color">Foreground Color:</label>
+                            <input 
+                                type="color" 
+                                id="foreground-color" 
+                                name="foregroundColor" 
+                                value="#000000"
+                                aria-label="QR code foreground color"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="background-color">Background Color:</label>
+                            <input 
+                                type="color" 
+                                id="background-color" 
+                                name="backgroundColor" 
+                                value="#ffffff"
+                                aria-label="QR code background color"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="branding-section">
+                        <h3>Branding Options</h3>
+                        
+                        <div class="form-group">
+                            <label for="brand-logo">Brand Logo (optional):</label>
+                            <input 
+                                type="file" 
+                                id="brand-logo" 
+                                name="brandLogo" 
+                                accept="image/*"
+                                aria-describedby="logo-help"
+                            >
+                            <small id="logo-help">Upload a logo to place in the center of the QR code</small>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="logo-size">Logo Size (% of QR):</label>
+                                <input 
+                                    type="range" 
+                                    id="logo-size" 
+                                    name="logoSize" 
+                                    min="5" 
+                                    max="30" 
+                                    value="20"
+                                    aria-describedby="logo-size-help"
+                                >
+                                <span id="logo-size-value">20%</span>
+                                <small id="logo-size-help">Larger logos may affect QR code readability</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="logo-background">Logo Background:</label>
+                                <select id="logo-background" name="logoBackground">
+                                    <option value="none">Transparent</option>
+                                    <option value="white" selected>White</option>
+                                    <option value="custom">Custom Color</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="custom-logo-bg-group" style="display: none;">
+                            <label for="custom-logo-bg">Custom Logo Background:</label>
+                            <input 
+                                type="color" 
+                                id="custom-logo-bg" 
+                                name="customLogoBg" 
+                                value="#ffffff"
+                                aria-label="Custom logo background color"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="brand-text">Brand Text (optional):</label>
+                            <input 
+                                type="text" 
+                                id="brand-text" 
+                                name="brandText" 
+                                placeholder="Your Brand Name"
+                                aria-describedby="brand-text-help"
+                            >
+                            <small id="brand-text-help">Text will appear below the QR code</small>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="text-color">Text Color:</label>
+                                <input 
+                                    type="color" 
+                                    id="text-color" 
+                                    name="textColor" 
+                                    value="#000000"
+                                    aria-label="Brand text color"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="text-size">Text Size:</label>
+                                <select id="text-size" name="textSize">
+                                    <option value="small">Small</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="large">Large</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="generate-btn" class="generate-btn">
+                        Generate QR Code
+                    </button>
+                </form>
+            </div>
+
+            <div class="result-section">
+                <div id="qr-result" class="qr-result" aria-live="polite">
+                    <div class="placeholder">
+                        <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="200" fill="#f8f9fa" stroke="#e9ecef" stroke-width="2" stroke-dasharray="10,10"/>
+                            <text x="100" y="100" text-anchor="middle" dominant-baseline="middle" fill="#6c757d" font-family="system-ui, sans-serif" font-size="14">
+                                QR Code will appear here
+                            </text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="result-actions">
+                    <div class="action-row">
+                        <button id="download-svg" class="action-btn" disabled aria-describedby="download-help">
+                            Download SVG
+                        </button>
+                        <button id="download-png" class="action-btn" disabled aria-describedby="download-help">
+                            Download PNG
+                        </button>
+                    </div>
+                    
+                    <div class="action-row">
+                        <button id="create-shareable" class="action-btn share-btn" disabled aria-describedby="share-help">
+                            📱 Create Shareable Link
+                        </button>
+                        <button id="share-whatsapp" class="action-btn whatsapp-btn" disabled style="display: none;">
+                            💬 Share on WhatsApp
+                        </button>
+                    </div>
+                    
+                    <small id="download-help">Generate a QR code first to enable downloads</small>
+                    <small id="share-help" style="display: none;">Create a shareable web page with your clickable QR code</small>
+                </div>
+
+                <div id="click-status" class="click-status" style="display: none;">
+                    <small>📱 <span id="click-status-text"></span></small>
+                </div>
+
+                <div id="share-result" class="share-result" style="display: none;">
+                    <h4>📱 Shareable Link Created!</h4>
+                    <div class="share-url-container">
+                        <input type="text" id="share-url" readonly class="share-url-input">
+                        <button id="copy-share-url" class="copy-btn">Copy</button>
+                    </div>
+                    <p class="share-instructions">
+                        <strong>For WhatsApp/iPhone:</strong> Copy this link and send it via WhatsApp. 
+                        When recipients open the link, they'll see your clickable QR code!
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by <a href="https://www.nayuki.io/page/qr-code-generator-library" target="_blank" rel="noopener">Nayuki's QR Code Generator</a></p>
+        </footer>
+    </div>
+
+    <script type="module" src="main.ts"></script>
+</body>
+</html>

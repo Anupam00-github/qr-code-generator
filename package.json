@@ -1,0 +1,25 @@
+{
+  "name": "qr-code-generator",
+  "version": "1.0.0",
+  "description": "A modern QR Code generator using Nayuki's library",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext ts,js --report-unused-disable-directives --max-warnings 0",
+    "format": "prettier --write src/**/*.{ts,js,html,css}"
+  },
+  "keywords": ["qr-code", "generator", "nayuki", "typescript"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.45.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
+  }
+}
