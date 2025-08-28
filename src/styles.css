@@ -191,7 +191,6 @@ small {
     font-size: 1rem;
     cursor: pointer;
     transition: var(--transition);
-    margin-top: 1rem;
 }
 
 .generate-btn:hover:not(:disabled) {
@@ -546,6 +545,7 @@ input[type="file"]:focus {
 .full-width {
   width: 100% !important;
   flex: 1;
+  min-width: 0; /* Ensure flex item can shrink */
 }
 
 /* Mobile responsive adjustments */
