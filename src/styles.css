@@ -529,7 +529,7 @@ input[type="file"]:focus {
   100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
 }
 
-/* Share functionality styling */
+/* Action row styling for download buttons */
 .action-row {
   display: flex;
   gap: 1rem;
@@ -542,108 +542,9 @@ input[type="file"]:focus {
   margin-bottom: 0;
 }
 
-.share-btn {
-  background: var(--primary-color);
-  color: white;
-}
-
-.share-btn:hover:not(:disabled) {
-  background: var(--primary-hover);
-}
-
-.whatsapp-btn {
-  background: #25d366;
-  color: white;
-}
-
-.whatsapp-btn:hover:not(:disabled) {
-  background: #128c7e;
-}
-
-.share-result {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background: var(--surface);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  text-align: center;
-}
-
-.share-result h4 {
-  margin-bottom: 1rem;
-  color: var(--primary-color);
-  font-size: 1.125rem;
-}
-
-.share-url-container {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  align-items: stretch;
-}
-
-.share-url-input {
-  flex: 1;
-  padding: 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--background);
-  font-family: monospace;
-  font-size: 0.875rem;
-  color: var(--text-primary);
-}
-
-.copy-btn {
-  padding: 0.75rem 1rem;
-  background: var(--success-color);
-  color: white;
-  border: none;
-  border-radius: var(--radius);
-  font-weight: 500;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.copy-btn:hover {
-  background: #047857;
-}
-
-.copy-btn:active {
-  transform: scale(0.95);
-}
-
-.share-instructions {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  margin: 0;
-}
-
-.share-instructions strong {
-  color: var(--text-primary);
-}
-
 /* Mobile responsive adjustments */
 @media (max-width: 640px) {
   .action-row {
     flex-direction: column;
   }
-  
-  .share-url-container {
-    flex-direction: column;
-  }
-  
-  .share-url-input {
-    text-align: center;
-  }
-}
-
-/* Copy success feedback */
-.copy-success {
-  background: var(--success-color) !important;
-  color: white !important;
-}
-
-.copy-success::after {
-  content: ' ✓';
 }

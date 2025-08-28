@@ -51,12 +51,6 @@ interface QRGeneratorElements {
   downloadPng: HTMLButtonElement;
   clickStatus: HTMLDivElement;
   clickStatusText: HTMLSpanElement;
-  // Sharing elements
-  createShareable: HTMLButtonElement;
-  shareWhatsApp: HTMLButtonElement;
-  shareResult: HTMLDivElement;
-  shareUrl: HTMLInputElement;
-  copyShareUrl: HTMLButtonElement;
 }
 
 class QRGenerator {
@@ -64,29 +58,13 @@ class QRGenerator {
   private currentSvg: string = '';
   private currentConfig: QRGeneratorConfig | null = null;
   private logoImage: HTMLImageElement | null = null;
-  private shareTemplate: string = '';
 
   constructor() {
     this.elements = this.getElements();
-    this.loadShareTemplate();
     this.initializeEventListeners();
   }
 
-  private async loadShareTemplate(): Promise<void> {
-    try {
-      const response = await fetch('./share-template.html');
-      this.shareTemplate = await response.text();
-    } catch (error) {
-      console.error('Failed to load share template:', error);
-      // Fallback template
-      this.shareTemplate = `<!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>{{TITLE}}</title></head>
-<body style="font-family: sans-serif; text-align: center; padding: 2rem; background: #f5f5f5;">
-<div style="background: white; padding: 2rem; border-radius: 1rem; display: inline-block;">
-<h1>{{TITLE}}</h1><div onclick="window.open('{{NORMALIZED_URL}}', '_blank')" style="cursor: pointer;">{{QR_SVG}}</div>
-{{BRAND_TEXT}}<p>👆 Tap to open: {{TARGET_URL}}</p></div></body></html>`;
-    }
-  }
+
 
   private getElements(): QRGeneratorElements {
     const getElementById = <T extends HTMLElement>(id: string): T => {
@@ -125,12 +103,6 @@ class QRGenerator {
       downloadPng: getElementById<HTMLButtonElement>('download-png'),
       clickStatus: getElementById<HTMLDivElement>('click-status'),
       clickStatusText: getElementById<HTMLSpanElement>('click-status-text'),
-      // Sharing elements
-      createShareable: getElementById<HTMLButtonElement>('create-shareable'),
-      shareWhatsApp: getElementById<HTMLButtonElement>('share-whatsapp'),
-      shareResult: getElementById<HTMLDivElement>('share-result'),
-      shareUrl: getElementById<HTMLInputElement>('share-url'),
-      copyShareUrl: getElementById<HTMLButtonElement>('copy-share-url'),
     };
   }
 
@@ -186,18 +158,7 @@ class QRGenerator {
       this.downloadPng();
     });
 
-    // Sharing buttons
-    this.elements.createShareable.addEventListener('click', () => {
-      this.createShareablePage();
-    });
 
-    this.elements.shareWhatsApp.addEventListener('click', () => {
-      this.shareOnWhatsApp();
-    });
-
-    this.elements.copyShareUrl.addEventListener('click', () => {
-      this.copyShareUrl();
-    });
 
     // Real-time generation on input change (debounced)
     let debounceTimer: number;
@@ -326,10 +287,6 @@ class QRGenerator {
       // Enable download buttons
       this.elements.downloadSvg.disabled = false;
       this.elements.downloadPng.disabled = false;
-      this.elements.createShareable.disabled = false;
-
-      // Hide previous share result
-      this.elements.shareResult.style.display = 'none';
 
     } catch (error) {
       console.error('Error generating QR code:', error);
@@ -478,81 +435,7 @@ class QRGenerator {
     }, 2000);
   }
 
-  private createShareablePage(): void {
-    if (!this.currentConfig || !this.currentSvg) return;
 
-    const config = this.currentConfig;
-    const isUrl = this.isUrl(config.text);
-    
-    if (!isUrl) {
-      alert('Shareable pages work best with URLs. Your QR code will still be shareable but not clickable.');
-    }
-
-    // Create the shareable HTML content
-    let html = this.shareTemplate;
-    
-    // Replace placeholders
-    const title = config.brandText || 'QR Code';
-    const subtitle = isUrl ? 'Tap the QR code to open instantly!' : 'Scan or share this QR code';
-    const normalizedUrl = isUrl ? this.normalizeUrl(config.text) : config.text;
-    
-    let brandTextHtml = '';
-    if (config.brandText) {
-      brandTextHtml = `<div class="brand-text ${config.textSize}" style="color: ${config.textColor};">${config.brandText}</div>`;
-    }
-    
-    html = html
-      .replace(/\{\{TITLE\}\}/g, title)
-      .replace(/\{\{SUBTITLE\}\}/g, subtitle)
-      .replace(/\{\{QR_SVG\}\}/g, this.currentSvg)
-      .replace(/\{\{BRAND_TEXT\}\}/g, brandTextHtml)
-      .replace(/\{\{TARGET_URL\}\}/g, config.text)
-      .replace(/\{\{NORMALIZED_URL\}\}/g, normalizedUrl);
-
-    // Create a data URL for the shareable page
-    const blob = new Blob([html], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    
-    // Show the shareable URL
-    this.elements.shareUrl.value = url;
-    this.elements.shareResult.style.display = 'block';
-    
-    // Show WhatsApp button if it's a URL
-    if (isUrl) {
-      this.elements.shareWhatsApp.style.display = 'inline-block';
-      this.elements.shareWhatsApp.disabled = false;
-    }
-  }
-
-  private shareOnWhatsApp(): void {
-    const shareUrl = this.elements.shareUrl.value;
-    if (!shareUrl) return;
-    
-    const message = `Check out this QR code: ${shareUrl}`;
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-  }
-
-  private async copyShareUrl(): Promise<void> {
-    try {
-      await navigator.clipboard.writeText(this.elements.shareUrl.value);
-      
-      // Show success feedback
-      const originalText = this.elements.copyShareUrl.textContent;
-      this.elements.copyShareUrl.classList.add('copy-success');
-      this.elements.copyShareUrl.textContent = 'Copied!';
-      
-      setTimeout(() => {
-        this.elements.copyShareUrl.classList.remove('copy-success');
-        this.elements.copyShareUrl.textContent = originalText;
-      }, 2000);
-    } catch (err) {
-      // Fallback for older browsers
-      this.elements.shareUrl.select();
-      document.execCommand('copy');
-      alert('Link copied to clipboard!');
-    }
-  }
 
   private showError(message: string): void {
     this.elements.qrResult.innerHTML = `
@@ -564,9 +447,7 @@ class QRGenerator {
     // Disable download buttons
     this.elements.downloadSvg.disabled = true;
     this.elements.downloadPng.disabled = true;
-    this.elements.createShareable.disabled = true;
     this.elements.clickStatus.style.display = 'none';
-    this.elements.shareResult.style.display = 'none';
   }
 
   private setLoading(loading: boolean): void {
