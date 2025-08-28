@@ -1,3 +1,7 @@
+/**
+ * QR Code Generator by E4Dev
+ * Advanced QR Code generator with branding support
+ */
 import qrcodegen from './qrcodegen';
 
 // Types for better TypeScript support
@@ -306,7 +310,7 @@ class QRGenerator {
         textSize: this.elements.textSize.value,
       };
 
-      // Generate QR code using Nayuki's library
+      // Generate QR code using the QR library
       const qr = qrcodegen.QrCode.encodeText(text, config.errorCorrection);
       
       // Convert to SVG with branding

@@ -1,10 +1,10 @@
-# QR Code Generator
+# QR Code Generator by E4Dev
 
 🌟 **[Live Demo](https://gitrvc-hub.github.io/qr-code-generator/)** | [GitHub Repository](https://github.com/gitrvc-hub/qr-code-generator)
 
-# QR Code Generator
+# QR Code Generator by E4Dev
 
-A modern, accessible QR Code generator built with TypeScript and Nayuki's QR Code Generator library.
+A modern, accessible QR Code generator built with TypeScript featuring advanced branding capabilities. Created by **E4Dev** for professional QR code generation needs.
 
 ## Features
 
@@ -60,7 +60,7 @@ Higher error correction levels create more complex QR codes but provide better d
 
 - **TypeScript**: Type-safe JavaScript for better development experience
 - **Vite**: Fast build tool and development server
-- **Nayuki QR Code Generator**: High-quality, well-tested QR code library
+- **Advanced QR Library**: High-quality, well-tested QR code generation
 - **Modern CSS**: Responsive design with CSS Grid and Flexbox
 - **Web Standards**: Uses modern browser APIs for file downloads
 
@@ -107,8 +107,9 @@ MIT License - see LICENSE file for details.
 
 ## Acknowledgments
 
-- [Nayuki](https://www.nayuki.io/) for the excellent QR Code Generator library
+- **E4Dev** - Creator and maintainer
 - Modern web standards for making this possible without heavy frameworks
+- TypeScript and modern browser APIs for seamless functionality
 
 ## Branding Features
 
