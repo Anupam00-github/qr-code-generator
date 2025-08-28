@@ -1,5 +1,9 @@
 # QR Code Generator
 
+🌟 **[Live Demo](https://gitrvc-hub.github.io/qr-code-generator/)** | [GitHub Repository](https://github.com/gitrvc-hub/qr-code-generator)
+
+# QR Code Generator
+
 A modern, accessible QR Code generator built with TypeScript and Nayuki's QR Code Generator library.
 
 ## Features
