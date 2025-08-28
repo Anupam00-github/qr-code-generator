@@ -196,10 +196,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <button type="submit" id="generate-btn" class="generate-btn">
-                        Generate QR Code
-                    </button>
                 </form>
             </div>
 
@@ -217,6 +213,12 @@
 
                 <div class="result-actions">
                     <div class="action-row">
+                        <button id="generate-btn" class="generate-btn">
+                            Generate QR Code
+                        </button>
+                    </div>
+                    
+                    <div class="action-row">
                         <button id="download-svg" class="action-btn" disabled aria-describedby="download-help">
                             Download SVG
                         </button>
@@ -224,8 +226,6 @@
                             Download PNG
                         </button>
                     </div>
-                    
-
                     
                     <small id="download-help">Generate a QR code first to enable downloads</small>
                 </div>

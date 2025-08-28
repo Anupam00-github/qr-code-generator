@@ -107,9 +107,8 @@ class QRGenerator {
   }
 
   private initializeEventListeners(): void {
-    // Form submission
-    this.elements.form.addEventListener('submit', (e) => {
-      e.preventDefault();
+    // Generate button click
+    this.elements.generateBtn.addEventListener('click', () => {
       this.generateQRCode();
     });
 
@@ -142,12 +141,7 @@ class QRGenerator {
       }
     });
 
-    // Clickable checkbox
-    this.elements.makeClickable.addEventListener('change', () => {
-      if (this.elements.inputText.value.trim()) {
-        this.generateQRCode();
-      }
-    });
+    // Clickable checkbox - no auto-generation, just for UI updates
 
     // Download buttons
     this.elements.downloadSvg.addEventListener('click', () => {
@@ -157,33 +151,6 @@ class QRGenerator {
     this.elements.downloadPng.addEventListener('click', () => {
       this.downloadPng();
     });
-
-
-
-    // Real-time generation on input change (debounced)
-    let debounceTimer: number;
-    const debounceGenerate = () => {
-      clearTimeout(debounceTimer);
-      debounceTimer = window.setTimeout(() => {
-        if (this.elements.inputText.value.trim()) {
-          this.generateQRCode();
-        }
-      }, 500);
-    };
-
-    this.elements.inputText.addEventListener('input', debounceGenerate);
-    this.elements.errorCorrection.addEventListener('change', debounceGenerate);
-    this.elements.borderSize.addEventListener('input', debounceGenerate);
-    this.elements.qrSize.addEventListener('input', debounceGenerate);
-    this.elements.foregroundColor.addEventListener('change', debounceGenerate);
-    this.elements.backgroundColor.addEventListener('change', debounceGenerate);
-    // Branding event listeners
-    this.elements.logoSize.addEventListener('input', debounceGenerate);
-    this.elements.logoBackground.addEventListener('change', debounceGenerate);
-    this.elements.customLogoBg.addEventListener('change', debounceGenerate);
-    this.elements.brandText.addEventListener('input', debounceGenerate);
-    this.elements.textColor.addEventListener('change', debounceGenerate);
-    this.elements.textSize.addEventListener('change', debounceGenerate);
   }
 
   private loadLogoImage(file: File): void {
@@ -192,10 +159,7 @@ class QRGenerator {
       const img = new Image();
       img.onload = () => {
         this.logoImage = img;
-        // Generate QR code with new logo
-        if (this.elements.inputText.value.trim()) {
-          this.generateQRCode();
-        }
+        // Logo loaded - user can now generate QR code with new logo
       };
       img.src = e.target?.result as string;
     };
