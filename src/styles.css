@@ -542,6 +542,12 @@ input[type="file"]:focus {
   margin-bottom: 0;
 }
 
+/* Full width button styling */
+.full-width {
+  width: 100% !important;
+  flex: 1;
+}
+
 /* Mobile responsive adjustments */
 @media (max-width: 640px) {
   .action-row {
